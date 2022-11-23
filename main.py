@@ -9,7 +9,7 @@ from corpus import Corpus
 
 
 # TODO: set data_fold and stopwords
-cur_corpus = Corpus(path('data_txt'), stopwords=['你', '我', '他'])
+cur_corpus = Corpus(path('./sample_txt/'), stopwords=['你', '我', '他'])
 
 print('start generating dictionary')
 dictionary = corpora.Dictionary(cur_corpus)

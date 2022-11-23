@@ -29,9 +29,9 @@ class Corpus:
     
     def read_txt(self, file_path):
         with open(file_path, 'r', encoding='utf-8')as f:
-            for line in f.readlines():
-                for sentence in self.split_line(line):
-                    yield sentence
+            total_line = ''.join([line.strip() for line in f.readlines()])
+            for sentence in self.split_line(total_line):
+                yield sentence
     
     def get_iter(self):
         for son_file in tqdm(os.listdir(self.root_fold)):
