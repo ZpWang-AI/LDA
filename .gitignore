@@ -1,0 +1,7 @@
+flag.xlsx
+
+test*
+*/test*
+data_txt
+__pycache__
+*/__pycache__
