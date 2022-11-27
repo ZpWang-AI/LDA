@@ -24,12 +24,13 @@ class Corpus:
         return re.split(r'[.!?。！？…]', line)
     
     def cut_sentence(self, sentence):
-        return [w for w in jb.cut(sentence) if w not in self.stopwords]
+        return [w for w in jb.cut(sentence) if w not in self.stopwords and len(w) > 1]
         # return [w.word for w in jbp.cut(sentence) if w.flag in self.tags and w.word not in self.stopwords]
     
     def read_txt(self, file_path):
         with open(file_path, 'r', encoding='utf-8')as f:
             total_line = ''.join([line.strip() for line in f.readlines()])
+            total_line = ''.join([p for p in total_line if not p.isdigit()])
             for sentence in self.split_line(total_line):
                 yield sentence
     
