@@ -17,14 +17,14 @@ class Corpus:
         self.tags = tags
         self.dic = None
         self.length = 0
-        print('start initializing')
+        print('start initializing corpus')
         for son_file in tqdm(os.listdir(self.root_fold)):
             cur_file = self.root_fold/son_file
             for sentence in self.read_txt(cur_file):
                 sentence = sentence.strip()
                 if sentence:
                     self.length += 1
-        print('finish initializing')
+        print('finish initializing corpus')
         
     def __iter__(self):
         return self.get_iter()
