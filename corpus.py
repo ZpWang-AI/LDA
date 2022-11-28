@@ -16,6 +16,13 @@ class Corpus:
         self.stopwords = stopwords
         self.tags = tags
         self.dic = None
+        self.length = 0
+        for son_file in tqdm(os.listdir(self.root_fold)):
+            cur_file = self.root_fold/son_file
+            for sentence in self.read_txt(cur_file):
+                sentence = sentence.strip()
+                if sentence:
+                    self.length += 1
         
     def __iter__(self):
         return self.get_iter()
@@ -45,9 +52,12 @@ class Corpus:
                         yield sentence
                     else:
                         yield self.dic.doc2bow(sentence)
+    
+    def __len__(self):
+        return self.length
                 
 
 if __name__ == '__main__':
-    for a in Corpus('./data_txt/'):
-        print(a)
+    sample_corpus = Corpus('./data_txt/')
+    print(len(sample_corpus))
     
