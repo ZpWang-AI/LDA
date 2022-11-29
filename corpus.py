@@ -33,10 +33,16 @@ class Corpus:
         return re.split(r'[.!?。！？…]', line)
     
     def cut_sentence(self, sentence):
+        '''
+        cut sentences, return list of words
+        '''
         return [w for w in jb.cut(sentence) if w not in self.stopwords and len(w) > 1]
         # return [w.word for w in jbp.cut(sentence) if w.flag in self.tags and w.word not in self.stopwords]
     
     def read_txt(self, file_path):
+        '''
+        return iterator of sentences which are filtered out space and digits from 
+        '''
         with open(file_path, 'r', encoding='utf-8')as f:
             total_line = ''.join([line.strip() for line in f.readlines()])
             total_line = ''.join([p for p in total_line if not p.isdigit()])
@@ -44,12 +50,18 @@ class Corpus:
                 yield sentence
     
     def get_iter(self):
-        for son_file in tqdm(os.listdir(self.root_fold)):
+        '''
+        return iterator of sentence, whose forms are [word1, word2, ...]
+        if self.dic is not None, words would be encoded by self.dic.doc2bow 
+        '''
+        pb = tqdm(total=self.length)
+        for son_file in os.listdir(self.root_fold):
             cur_file = self.root_fold/son_file
             for sentence in self.read_txt(cur_file):
                 sentence = sentence.strip()
                 if sentence:
                     sentence = self.cut_sentence(sentence)
+                    pb.update(1)
                     if self.dic is None:
                         yield sentence
                     else:
