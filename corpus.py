@@ -12,6 +12,9 @@ class Corpus:
                  stopwords=('没', '就', '知道', '是', '才', '听听', '坦言', '全面', '越来越', '评价', '放弃', '人'),
                  tags=('n', 'nr', 'ns', 'nt', 'eng', 'v', 'd'),
                  ) -> None:
+        '''
+        tags are not used
+        '''
         self.root_fold = path(root_fold)
         self.stopwords = stopwords
         self.tags = tags
@@ -34,7 +37,7 @@ class Corpus:
     
     def cut_sentence(self, sentence):
         '''
-        cut sentences, return list of words
+        cut sentences, return list of words and filter out stopwords and short words
         '''
         return [w for w in jb.cut(sentence) if w not in self.stopwords and len(w) > 1]
         # return [w.word for w in jbp.cut(sentence) if w.flag in self.tags and w.word not in self.stopwords]
