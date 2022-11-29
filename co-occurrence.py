@@ -11,7 +11,7 @@ def cal_co_occurrence(corpus: Corpus, dic: set):
         dic (set): a set that contains key words
 
     Returns:
-        dict: {pair of word(key): weight(value)}, pair of word is a string that link word1 with word2 by char '#'
+        list: list of [word1, word2, weight]
     """
     res = defaultdict(int)
     for sentence in corpus:
@@ -21,8 +21,10 @@ def cal_co_occurrence(corpus: Corpus, dic: set):
             # TODO: filter pairs of word that would be considered
             if word1 in dic or word2 in dic:
                 res['#'.join(sorted([word1, word2]))] += 1
-    return res
+    return [[*k.split('#'), v] for k, v in res.items()]
                 
                 
 if __name__ == '__main__':
-    sample_corpus = Corpus('./data_txt/', )
+    sample_corpus = Corpus('./data_txt/', stopwords=('你', '我'))
+    sample_dic = {'祖国', '党'}
+    print(cal_co_occurrence(sample_corpus, sample_dic))
